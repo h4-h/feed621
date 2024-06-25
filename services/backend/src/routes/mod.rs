@@ -17,7 +17,7 @@ mod test_routes;
         (path="/api/test", api=test_routes::TestApi),
     ),
     tags(
-        (name = "test routes", description = "Routes for tesing app")
+        (name = "test_routes", description = "Routes for tesing app")
     ),
 )]
 struct ApiDoc;
