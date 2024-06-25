@@ -18,7 +18,7 @@
 5. [sqlx](https://github.com/launchbadge/sqlx) - compile-time checked queries for sql
 6. [serde](https://serde.rs) - serialization and deserialization library
 
-Other libraries can be find in the [`Cargo.toml`](./Cargo.toml) file.
+Other libraries can be found in the [`Cargo.toml`](./Cargo.toml) file.
 
 ## Dockerfiles
 
