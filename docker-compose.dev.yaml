@@ -2,6 +2,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4:8.8
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
@@ -14,6 +16,8 @@ services:
       context: services/backend
       dockerfile: Dockerfile.dev
     restart: unless-stopped
+    depends_on:
+      - postgres
     environment:
       SERVICE_ADDR: "0.0.0.0:${BACKEND_PORT}"
       DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
