@@ -15,8 +15,8 @@ pub(crate) fn routes<T: Clone + Send + Sync + 'static>() -> axum::Router<Arc<T>>
 
 #[utoipa::path(
     get,
-    path="",
-    responses((status = 200, description = "Indicates that app work.", body = [String]))
+    path = "",
+    responses((status = 200, description = "Indicates that app work.", body = String))
 )]
 async fn test_get<T: Clone + Send + Sync + 'static>(
     State(_state): State<Arc<T>>,
@@ -27,8 +27,8 @@ async fn test_get<T: Clone + Send + Sync + 'static>(
 
 #[utoipa::path(
     get,
-    path="/{echo_text}",
-    responses((status = 200, description = "Returns {echo_text} in body.", body = [String]))
+    path = "/{echo_text}",
+    responses((status = 200, description = "Returns {echo_text} in body.", body = String))
 )]
 async fn echo<T: Clone + Send + Sync + 'static>(
     State(_state): State<Arc<T>>,

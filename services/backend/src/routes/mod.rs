@@ -7,17 +7,17 @@ mod test_routes;
 #[derive(OpenApi)]
 #[openapi(
     info(
-        title="Feed621",
-        description="REST API that looks like feed for e621.net",
-        version="1.0.0",
-        contact(name="hash", url="https://github.com/h4-h/feed621"),
-        license(name="MIT", url="https://github.com/h4-h/feed621/blob/main/LICENSE"),
+        title = "Feed621",
+        description = "REST API that looks like feed for e621.net",
+        version = "1.0.0",
+        contact(name = "hash", url = "https://github.com/h4-h/feed621"),
+        license(name = "MIT", url = "https://github.com/h4-h/feed621/blob/main/LICENSE"),
     ),
     nest(
-        (path="/api/test", api=test_routes::TestApi),
+        (path = "/api/test", api = test_routes::TestApi),
     ),
     tags(
-        (name = "test_routes", description = "Routes for tesing app")
+        (name = "test_routes", description = "Test routes")
     ),
 )]
 struct ApiDoc;
