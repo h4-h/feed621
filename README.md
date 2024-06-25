@@ -71,7 +71,7 @@ $ ./scripts/start.sh <docker | podman> <dev | prod>
 See service readme for development information:
 
 - [backend](./services/backend/README.md)
-- [database](./services/dabase/README.md)
+- [database](./services/database/README.md)
 
 #### [LICENSE](./LICENSE)
 
