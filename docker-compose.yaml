@@ -1,0 +1,38 @@
+name: "feed621"
+
+volumes:
+  database-vol:
+
+networks:
+  database-net:
+  backend-net:
+
+services:
+  postgres:
+    image: postgres:12.19-alpine3.20
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./.database-vol:/var/lib/postgres/feed621
+    ports:
+      - "5432:5432"
+    networks:
+      - database-net
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 4G
+  pgadmin:
+    image: dpage/pgadmin4:8.8
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5433:80"
+    networks:
+      - database-net

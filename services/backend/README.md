@@ -1,0 +1,33 @@
+<div align="center">
+  <h1>feed621 - backend</h1>
+  <p>
+    <strong>This is a readme about development, general purpose readme <a href="../../README.md">here</a>.</strong>
+  </p>
+</div>
+
+## Requirements
+
+1. docker/podman (see [general purpose readme](../../README.md) for more information)
+
+## Used technologies
+
+1. [podman](https://podman.io) - containerization
+2. [docker-compose](https://github.com/docker/compose) - declarative multi-container tool
+3. [rust](https://rust-lang.org) - best language in the whole universe
+4. [axum](https://github.com/tokio-rs/axum) - something that looks like actix but [faster](https://www.techempower.com/benchmarks/#hw=ph&test=fortune&section=data-r22)
+5. [sqlx](https://github.com/launchbadge/sqlx) - compile-time checked queries for sql
+6. [serde](https://serde.rs) - serialization and deserialization library
+
+Other libraries can be find in the [`Cargo.toml`](./Cargo.toml) file.
+
+## Dockerfiles
+
+[Dockerfile](./Dockerfile) for a production, it builds binary in the [release](https://doc.rust-lang.org/book/ch14-01-release-profiles.html) profile and contains two stages for small footprint.
+
+[Dockerfile.dev](./Dockerfile.dev) for development, it watches for a file changes and rebuilds binary automatically.
+
+## Miscellaneous
+
+[.env](./.env) file contains `SERVICE_ADDR` and `DATABASE_URL`, change them to actual values if you want to run backend outside of the container.
+
+I tried to use something like [controller-service-repository](https://tom-collings.medium.com/controller-service-repository-16e29a4684e5) pattern(first link that i clicked, idk how good it is) and [dependency-injection](https://en.wikipedia.org/wiki/Dependency_injection), but how it turned out is up to you to decide.

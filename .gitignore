@@ -1,0 +1,8 @@
+# helix ignore file
+**/.ignore
+
+# database volume
+**/.database-vol
+
+# rust cache
+**/target
