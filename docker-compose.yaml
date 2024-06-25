@@ -26,3 +26,16 @@ services:
         limits:
           cpus: "1"
           memory: 4G
+  migrations:
+    build:
+      context: services/database
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+    volumes:
+      - ./services/database:/app
+    networks:
+      - database-net
