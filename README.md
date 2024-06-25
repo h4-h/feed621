@@ -55,10 +55,10 @@ If you are using [podman](https://podman.io):
 # Clone repo
 $ git clone https://github.com/h4-h/feed621
 
-# cd into project directory
+# change directory to project
 $ cd feed621
 
-# Run project with docker or podman
+# Run project
 $ ./scripts/start.sh <docker | podman> <dev | prod>
 ```
 
