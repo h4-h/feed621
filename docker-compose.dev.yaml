@@ -1,4 +1,14 @@
 services:
+  pgadmin:
+    image: dpage/pgadmin4:8.8
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "4444:80"
+    networks:
+      - database-net
   backend:
     build:
       context: services/backend
