@@ -14,11 +14,9 @@ async fn main() {
     
     let _ = dotenvy::dotenv();
     let config = config::Config::new();
-    
-    let db_pool = database::get_postgres_pool(&config).await;
 
+    let db_pool = database::get_postgres_pool(&config).await;
     println!("\x1B[0;32m[+] Database connection estabileshed.\x1B[0m");
-    println!("\x1B[0;32m[+] Listening on http://{}\x1B[0m", config.service_addr());
 
     let listener = tokio::net::TcpListener::bind(config.service_addr()).await
         .unwrap_or_else(|_| panic!("\x1B[0;31m[!] Can not bind address.\x1B[0m"));
@@ -29,4 +27,5 @@ async fn main() {
     
     axum::serve(listener, routes::app(state).into_make_service()).await
         .unwrap_or_else(|_| panic!("\x1B[0;31m[!] Can not serve.\x1B[0m"));
+    println!("\x1B[0;32m[+] Listening on http://{}\x1B[0m", config.service_addr());
 }
