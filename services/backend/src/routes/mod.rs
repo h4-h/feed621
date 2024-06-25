@@ -1,11 +1,32 @@
+use utoipa::OpenApi;
+use utoipa_scalar::{Scalar, Servable};
 use crate::response::AppResponse;
 
 mod test_routes;
 
-pub(crate) fn app<T: Clone + Send + Sync + 'static>(state: T) -> axum::Router {
+#[derive(OpenApi)]
+#[openapi(
+    info(
+        title="Feed621",
+        description="REST API that looks like feed for e621.net",
+        version="1.0.0",
+        contact(name="hash", url="https://github.com/h4-h/feed621"),
+        license(name="MIT", url="https://github.com/h4-h/feed621/blob/main/LICENSE"),
+    ),
+    nest(
+        (path="/api/test", api=test_routes::TestApi),
+    ),
+    tags(
+        (name = "test routes", description = "Routes for tesing app")
+    ),
+)]
+struct ApiDoc;
+
+pub(crate) fn app<S: Clone + Send + Sync + 'static>(state: S) -> axum::Router {
     axum::Router::new()
         .fallback(fallback)
-        .merge(test_routes::routes::<T>())
+        .merge(Scalar::with_url("/scalar", ApiDoc::openapi()))
+        .nest("/api/test", test_routes::routes())
         .with_state(state.into())
 }
 

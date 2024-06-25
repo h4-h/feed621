@@ -1,7 +1,7 @@
 use axum::http::StatusCode;
 use serde::Serialize;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, utoipa::ToSchema)]
 pub(crate) struct AppResponse<B> where B: Serialize {
     code: u16,
     body: B,
