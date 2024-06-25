@@ -16,7 +16,7 @@
 2. [docker-compose](https://github.com/docker/compose) - declarative multi-container tool
 3. [postgresql](https://www.postgresql.org) - i don't know why you would use something else
 
-### Migrations
+## Migrations
 
 1. Install sqlx-cli via cargo: `cargo install sqlx-cli`
 2. Execute `source ./scripts/set_database_url.sh`
@@ -32,5 +32,3 @@ $ sqlx migrate run
 # Revert migration
 $ sqlx migrate revert
 ```
-
-## Miscellaneous
