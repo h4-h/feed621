@@ -35,15 +35,9 @@ If you are using [podman](https://podman.io):
     <summary>Dinit <code>podman.socket</code> service</summary>
 
     ```
-    type = inetd
-    cmd = /usr/bin/podman system service -t 0
-    description = Podman API Socket
-    restart = true
+    type = process
+    command = /usr/bin/podman system service -t 0
     logfile = /var/log/podman-api-socket.log
-
-    [socket]
-    path = unix:///run/user/1000/podman/podman.sock
-    perms = 0660
     ```
 
   </details>
