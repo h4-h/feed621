@@ -1,6 +1,7 @@
 mod config;
-mod response;
+mod error_response;
 mod database;
+mod models;
 mod routes;
 
 #[derive(Clone)]
@@ -22,7 +23,7 @@ async fn main() {
         .unwrap_or_else(|_| panic!("\x1B[0;31m[!] Can not bind address.\x1B[0m"));
 
     let state = AppState {
-        
+
     };
     
     axum::serve(listener, routes::app(state).into_make_service()).await
