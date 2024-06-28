@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use axum::{extract::State, routing::{delete, post}, Json};
 
-use crate::models::user_models::{NewUser, User};
+use crate::models::user_models::User;
 
 #[derive(utoipa::OpenApi)]
 #[openapi(
@@ -22,19 +22,18 @@ pub(crate) fn routes<T: Clone + Send + Sync + 'static>() -> axum::Router<Arc<T>>
     post,
     path = "",
     description = "Creates new user.",
-    request_body = NewUser,
+    request_body = User,
     responses(
         (
             status = 201,
             body = User,
             description = "User created.",
-            example = json!({"tg_user_id": 1}),
         ),
         (
             status = 409,
             body = AppError,
             description = "User with this id already exists.",
-            example = json!({"code": 409, "body": "User with id 1 already exists."}),
+            example = json!({"code": 409, "body": "User with id 665367136 already exists."}),
         ),
         (
             status = 500,
@@ -46,7 +45,7 @@ pub(crate) fn routes<T: Clone + Send + Sync + 'static>() -> axum::Router<Arc<T>>
 )]
 async fn create_user<T: Clone + Send + Sync + 'static>(
     State(_state): State<Arc<T>>,
-    Json(_new_user): Json<NewUser>,
+    Json(_new_user): Json<User>,
 ) -> impl axum::response::IntoResponse {
     todo!()
 }
@@ -65,7 +64,7 @@ async fn create_user<T: Clone + Send + Sync + 'static>(
             status = 404,
             body = AppError,
             description = "User not found.",
-            example = json!({"code": 404, "body": "User with id 1 doesn't exists."}),
+            example = json!({"code": 404, "body": "User with id 665367136 doesn't exists."}),
         ),
         (
             status = 500,
