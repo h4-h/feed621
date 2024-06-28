@@ -60,6 +60,8 @@ $ ./scripts/start.sh <docker | podman> <dev | prod>
 
 `./scripts/start.sh <docker | podman> prod` starts a production build with staged lightweight containers and release builds.
 
+All configuration done in the `.env` file.
+
 ## Development
 
 See service readme for development information:
