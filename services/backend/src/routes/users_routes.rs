@@ -61,6 +61,12 @@ async fn create_user<T: Clone + Send + Sync + 'static>(
             description = "User successfuly deleted.",
         ),
         (
+            status = 401,
+            body = AppError,
+            description = "User and chat id's different from DB record.",
+            example = json!({"code": 401, "body": "Unauthorized."}),
+        ),
+        (
             status = 404,
             body = AppError,
             description = "User not found.",
