@@ -135,6 +135,7 @@ dependencies = [
  "confgen",
  "dotenvy",
  "serde",
+ "serde_json",
  "sqlx",
  "tokio",
  "utoipa",
