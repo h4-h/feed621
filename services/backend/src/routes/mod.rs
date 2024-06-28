@@ -1,8 +1,8 @@
 use utoipa::OpenApi;
 use utoipa_scalar::{Scalar, Servable};
-use crate::response::AppResponse;
+use crate::{models, error_response::AppErrorResponse};
 
-mod test_routes;
+mod users_routes;
 
 #[derive(OpenApi)]
 #[openapi(
@@ -14,10 +14,23 @@ mod test_routes;
         license(name = "MIT", url = "https://github.com/h4-h/feed621/blob/main/LICENSE"),
     ),
     nest(
-        (path = "/api/test", api = test_routes::TestApi),
+        (path = "/api/users", api = users_routes::UsersApi),
     ),
     tags(
-        (name = "test_routes", description = "Test routes")
+        (name = "users_routes", description = "C(reate)R(ead) user routes."),
+    ),
+
+    components(
+        schemas(
+            AppErrorResponse,
+            models::user_models::User,
+            models::user_models::NewUser,
+            models::topic_models::Topic,
+            models::topic_models::NewTopic,
+            models::topic_models::UpdateTopic,
+            models::subscription_models::Subscription,
+            models::subscription_models::NewSubscription,
+        ),
     ),
 )]
 struct ApiDoc;
@@ -26,12 +39,12 @@ pub(crate) fn app<S: Clone + Send + Sync + 'static>(state: S) -> axum::Router {
     axum::Router::new()
         .fallback(fallback)
         .merge(Scalar::with_url("/scalar", ApiDoc::openapi()))
-        .nest("/api/test", test_routes::routes())
+        .nest("/api/users", users_routes::routes())
         .with_state(state.into())
 }
 
 async fn fallback(
     uri: axum::http::Uri
 ) -> impl axum::response::IntoResponse {
-    AppResponse::not_found(format!("Page {uri}"))
+    AppErrorResponse::not_found(format!("Page {uri}"))
 }
