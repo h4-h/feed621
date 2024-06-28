@@ -17,7 +17,7 @@ mod users_routes;
         (path = "/api/users", api = users_routes::UsersApi),
     ),
     tags(
-        (name = "users_routes", description = "C(reate)R(ead) user routes."),
+        (name = "users_routes", description = "user routes."),
     ),
 
     components(
