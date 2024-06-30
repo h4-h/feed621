@@ -27,6 +27,8 @@ If you are using [podman](https://podman.io):
 
   AND setup a socket for podman on `unix:///run/user/1000/podman/podman.sock`:
 
+  Script: `$ ./scripts/podman_socket.sh`
+
   Systemd: `$ sudo systemctl start podman.socket` (comes with `podman-docker`)
   
   Dinit: `$ sudo dinitctl start podman.socket`
