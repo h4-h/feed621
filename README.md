@@ -66,6 +66,10 @@ All configuration done in the `.env` file.
 
 ## Development
 
+All development happens inside containers, do not try run services outside of the containers.
+
+For development run: `./scripts/start.sh <docker | podman> dev`
+
 See service readme for development information:
 
 - [nginx](./services/nginx/README.md)
