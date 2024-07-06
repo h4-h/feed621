@@ -2,7 +2,6 @@ use std::{sync::Arc, time::Duration};
 use aide::axum::ApiRouter;
 use axum::{http::header::AUTHORIZATION, response::IntoResponse};
 use tower_http::{catch_panic::CatchPanicLayer, compression::CompressionLayer, cors::{self, CorsLayer}, sensitive_headers::SetSensitiveHeadersLayer, timeout::TimeoutLayer};
-
 use crate::error::AppError;
 
 mod openapi;
