@@ -1,15 +1,18 @@
-use aide::{axum::{routing::post_with, ApiRouter, IntoApiResponse}, transform::TransformOperation};
+use aide::{axum::{routing::{delete_with, post_with}, ApiRouter, IntoApiResponse}, transform::TransformOperation};
+use axum::extract::Path;
 
 pub(crate) fn subscription_routes() -> ApiRouter {
     ApiRouter::new()
-        .api_route("/subscribe", 
+        .api_route("/subscribe/topic/:id", 
             post_with(subscribe, subscribe_docs)
-                .delete_with(unsubscribe, unsubscribe_docs)
+        )
+        .api_route("/unsibscribe/topic/:id", 
+                delete_with(unsubscribe, unsubscribe_docs)
         )
 }
 
 async fn subscribe(
-
+    Path(_id): Path<i64>,
 ) -> impl IntoApiResponse {
     "NYI: subscribe"
 }
@@ -21,7 +24,7 @@ fn subscribe_docs(op: TransformOperation) -> TransformOperation {
 }
 
 async fn unsubscribe(
-
+    Path(_id): Path<i64>,
 ) -> impl IntoApiResponse {
     "NYI: unsibscribe"
 }
