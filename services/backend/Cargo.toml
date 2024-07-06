@@ -5,7 +5,6 @@ edition = "2021"
 
 [dependencies]
 # Util crates
-dotenvy = "0.15.7"
 envconfgen = "1.0.2"
 
 # Logging

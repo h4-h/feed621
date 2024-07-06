@@ -266,7 +266,6 @@ dependencies = [
  "anyhow",
  "axum",
  "axum-macros",
- "dotenvy",
  "env_logger",
  "envconfgen",
  "log",
