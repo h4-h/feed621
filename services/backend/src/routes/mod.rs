@@ -1,52 +1,36 @@
-use utoipa::OpenApi;
-use utoipa_scalar::{Scalar, Servable};
-use crate::{models, error_response::AppErrorResponse};
+use std::{sync::Arc, time::Duration};
+use aide::axum::ApiRouter;
+use axum::{http::header::AUTHORIZATION, response::IntoResponse};
+use tower_http::{catch_panic::CatchPanicLayer, compression::CompressionLayer, cors::{self, CorsLayer}, sensitive_headers::SetSensitiveHeadersLayer, timeout::TimeoutLayer};
 
-mod users_routes;
-mod subscriptions_routes;
+use crate::error::AppError;
 
-#[derive(OpenApi)]
-#[openapi(
-    info(
-        title = "Feed621",
-        description = "REST API that looks like feed for e621.net",
-        version = "1.0.0",
-        contact(name = "hash", url = "https://github.com/h4-h/feed621"),
-        license(name = "MIT", url = "https://github.com/h4-h/feed621/blob/main/LICENSE"),
-    ),
-    nest(
-        (path = "/api/users", api = users_routes::UsersApi),
-        (path = "/api/subscriptions", api = subscriptions_routes::SubscriptionsApi),
-    ),
-    tags(
-        (name = "users_routes", description = "User routes."),
-        (name = "subscriptions_routes", description = "Subscription routes."),
-    ),
+mod openapi;
+mod test_routes;
 
-    components(
-        schemas(
-            AppErrorResponse,
-            models::user_models::User,
-            models::topic_models::Topic,
-            models::topic_models::NewTopic,
-            models::topic_models::UpdateTopic,
-            models::subscription_models::Subscription,
-        ),
-    ),
-)]
-struct ApiDoc;
-
-pub(crate) fn app<S: Clone + Send + Sync + 'static>(state: S) -> axum::Router {
-    axum::Router::new()
+pub(crate) fn configure_routes() -> axum::Router {
+    let mut api = openapi::generate_api();
+    
+    aide::axum::ApiRouter::new()
         .fallback(fallback)
-        .merge(Scalar::with_url("/scalar", ApiDoc::openapi()))
-        .nest("/api/users", users_routes::routes())
-        .nest("/api/subscriptions", subscriptions_routes::routes())
-        .with_state(state.into())
+        .nest("/docs", openapi::docs_routes())
+        .nest("/api", api_routes())
+        .finish_api_with(&mut api, openapi::configure_api)
+        .layer(axum::Extension(Arc::new(api)))
+        .layer((
+            TimeoutLayer::new(Duration::from_secs(30)),
+            CorsLayer::new().allow_origin(cors::Any),
+            CompressionLayer::new(),
+            CatchPanicLayer::new(),
+            SetSensitiveHeadersLayer::new([AUTHORIZATION]),
+        ))
 }
 
-async fn fallback(
-    uri: axum::http::Uri
-) -> impl axum::response::IntoResponse {
-    AppErrorResponse::not_found(format!("Page {uri}"))
+fn api_routes() -> ApiRouter {
+    ApiRouter::new()
+        .merge(test_routes::test_routes())
+}
+
+async fn fallback() -> impl axum::response::IntoResponse {
+    AppError::NotFound.into_response()
 }

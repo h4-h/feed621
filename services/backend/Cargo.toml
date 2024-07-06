@@ -4,15 +4,39 @@ version = "1.0.0"
 edition = "2021"
 
 [dependencies]
-confgen = { path="./confgen" }
-
+# Util crates
 dotenvy = "0.15.7"
-axum = "0.7.5"
-tokio = { version="1.38.0", features = ["macros", "rt-multi-thread"] }
-utoipa = { version = "5.0.0-alpha.0", features = ["axum_extras"] }
-utoipa-scalar = { version = "0.2.0-alpha.0", features = ["axum"] }
+envconfgen = "1.0.2"
 
-async-trait = "0.1.80"
-serde_json = "1.0"
+# Logging
+log = "0.4.22"
+env_logger = "0.11.3"
+
+# Error handling
+thiserror = "1.0.61"
+anyhow = "1.0.86"
+
+# Serialization
+serde_json = "1.0.1" # I hate this BTW
 serde = { version="1.0.200", features=["derive"] }
+
+# Async runtime
+tokio = { version="1.38.0", features = ["macros", "rt-multi-thread"] }
+
+# Not an ORM, but better
 sqlx = { version = "0.7.4", features = ["runtime-tokio", "tls-rustls", "postgres"] }
+
+# Web crates
+axum = { version = "0.7.5", features = ["tower-log"] }
+axum-macros = "0.4.1"
+tower-http = { version = "0.5.2", features = [
+  "catch-panic",
+  "compression-full",
+  "sensitive-headers",
+  "timeout",
+  "cors"
+] }
+
+# OpenAPI generator
+schemars = "0.8.21"
+aide = { version = "0.13.4", features = ["axum", "macros"] }

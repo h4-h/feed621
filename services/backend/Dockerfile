@@ -1,8 +1,6 @@
 FROM rust:1.79.0-alpine as builder
 
 WORKDIR /app
-COPY /confgen/Cargo.toml ./confgen/Cargo.toml
-COPY /confgen/src/* ./confgen/src/*
 COPY Cargo.toml .
 COPY Cargo.lock .
 COPY /src/* ./src/

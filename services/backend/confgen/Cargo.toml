@@ -1,7 +1,0 @@
-[package]
-name = "confgen"
-description = "Simple macros for generating a default `Config` struct."
-version = "1.0.0"
-edition = "2021"
-
-[dependencies]
