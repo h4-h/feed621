@@ -5,16 +5,11 @@
   </p>
 </div>
 
+Database service, tbh responsible only for the migrations.
+
 ## Requirements
 
-1. docker/podman (see [general purpose readme](../../README.md) for more information)
-2. [sqlx-cli](https://github.com/launchbadge/sqlx/blob/main/sqlx-cli/README.md)
-
-## Used technologies
-
-1. [podman](https://podman.io) - containerization
-2. [docker-compose](https://github.com/docker/compose) - declarative multi-container tool
-3. [postgresql](https://www.postgresql.org) - i don't know why you would use something else
+1. [sqlx-cli](https://github.com/launchbadge/sqlx/blob/main/sqlx-cli/README.md)
 
 ## Migrations
 
