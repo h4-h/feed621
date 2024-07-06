@@ -23,7 +23,7 @@ async fn register(
 }
 
 fn register_docs(op: TransformOperation) -> TransformOperation {
-    op.description("Registration route")
+    op.description("Register new user")
         .tag("User routes")
         .response::<201, String>()
 }
@@ -35,7 +35,7 @@ async fn get_user(
 }
 
 fn get_user_docs(op: TransformOperation) -> TransformOperation {
-    op.description("Get user route, fetches user")
+    op.description("Get user information")
         .tag("User routes")
         .response::<200, String>()
 }
