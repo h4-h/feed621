@@ -1,10 +1,9 @@
 use std::{borrow::Cow, collections::HashMap};
-
 use axum::{http::StatusCode, response::IntoResponse, Json};
 
 /// Error wrapper that used between MVC layers.
 #[derive(Debug, thiserror::Error)]
-pub enum AppError {
+pub(crate) enum AppError {
     /// `401 Unauthorized`.
     #[error("Authentication required.")]
     Unauthorized,
