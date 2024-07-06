@@ -1,5 +1,5 @@
 use std::sync::Arc;
-use aide::{axum::{routing::get, ApiRouter, IntoApiResponse}, openapi::{License, OpenApi}, transform::TransformOpenApi};
+use aide::{axum::{routing::get, ApiRouter, IntoApiResponse}, openapi::{License, OpenApi, Tag}, transform::TransformOpenApi};
 use axum::{response::{Html, IntoResponse}, Extension, Json};
 
 pub(crate) fn docs_routes() -> ApiRouter {
@@ -38,6 +38,26 @@ pub fn configure_api(api: TransformOpenApi) -> TransformOpenApi {
             name: "hash".into(),
             identifier: Some("MIT".into()),
             url: Some("https://github.com/h4-h/feed621/blob/main/LICENSE".into()),
+            ..Default::default()
+        })
+        .tag(Tag {
+            name: "Test routes".into(),
+            description: Some("There i'm trying to understand how axum and aide works.".into()),
+            ..Default::default()
+        })
+        .tag(Tag {
+            name: "User routes".into(),
+            description: Some("Routes responsible to the operations with user.".into()),
+            ..Default::default()
+        })
+        .tag(Tag {
+            name: "Topic routes".into(),
+            description: Some("Routes responsible to the operations with topics.".into()),
+            ..Default::default()
+        })
+        .tag(Tag {
+            name: "Subscription routes".into(),
+            description: Some("Routes responsible to the operations with subscripbtions.".into()),
             ..Default::default()
         })
 }

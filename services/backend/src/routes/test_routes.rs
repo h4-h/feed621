@@ -16,6 +16,7 @@ async fn owo() -> impl IntoApiResponse {
 
 fn owo_docs(op: TransformOperation) -> TransformOperation {
     op.description("Test route, just returns string")
+        .tag("Test routes")
         .response::<200, String>()
 }
 
@@ -44,5 +45,6 @@ async fn echo_body(
 
 fn echo_body_docs(op: TransformOperation) -> TransformOperation {
     op.description("Echo test route")
+        .tag("Test routes")
         .response::<200, Json<TestStruct>>()
 }
