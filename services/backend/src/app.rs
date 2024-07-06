@@ -21,14 +21,13 @@ pub(crate) struct App {
 
 impl App {
     pub fn new() -> Self {
-        let _ = dotenvy::dotenv();
         env_logger::init_from_env(env_logger::Env::default().default_filter_or("info"));
 
         Self {
             config: Config::new(),
         }
     }
-    
+
     pub async fn serve(&self) -> anyhow::Result<()> {
         let listener = self.bind_address().await?;
         let state = self.init_state().await?;
