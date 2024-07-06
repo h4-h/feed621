@@ -7,7 +7,7 @@ ENV_PATH="./.env"
 [ -f $ENV_PATH ] || (printf "${RED}Can not find .env file.${NC}\n" && exit -1)
 
 source $ENV_PATH
-export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0${POSTGRES_PORT}/${POSTGRES_DB}"
+export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@0.0.0.0:5432/${POSTGRES_DB}"
 
 while IFS= read -r line; do
   [[ -z "$line" || "$line" == \#* ]] && continue

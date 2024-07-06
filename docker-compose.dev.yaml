@@ -1,4 +1,7 @@
 services:
+  postgres:
+    ports:
+      - "5432:5432"
   pgadmin:
     image: dpage/pgadmin4:8.8
     restart: unless-stopped
@@ -8,7 +11,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
-      - "4444:80"
+      - "${PGADMIN_PORT}:80"
     networks:
       - database-net
   backend:
@@ -19,12 +22,12 @@ services:
     depends_on:
       - migrations
     environment:
-      SERVICE_ADDR: "0.0.0.0:${BACKEND_PORT}"
+      SERVICE_ADDR: "0.0.0.0:8080"
       DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      RUST_LOG: "debug"
+      RUST_LOG_STYLE: "always"
     volumes:
       - ./services/backend:/app
-    ports:
-        - "${BACKEND_PORT}:8080"
     networks:
       - database-net
       - backend-net

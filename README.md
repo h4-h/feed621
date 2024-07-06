@@ -68,8 +68,9 @@ All configuration done in the `.env` file.
 
 See service readme for development information:
 
-- [backend](./services/backend/README.md)
+- [nginx](./services/nginx/README.md)
 - [database](./services/database/README.md)
+- [backend](./services/backend/README.md)
 
 #### [LICENSE](./LICENSE)
 
