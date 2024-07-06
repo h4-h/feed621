@@ -9,6 +9,7 @@ mod openapi;
 mod test_routes;
 mod user_routes;
 mod topic_routes;
+mod subscription_routes;
 
 pub(crate) fn configure_routes() -> axum::Router {
     let mut api = openapi::generate_api();
@@ -33,6 +34,7 @@ fn api_routes() -> ApiRouter {
         .merge(test_routes::test_routes())
         .merge(user_routes::user_routes())
         .merge(topic_routes::topic_routes())
+        .merge(subscription_routes::subscription_routes())
 }
 
 async fn fallback() -> impl axum::response::IntoResponse {
