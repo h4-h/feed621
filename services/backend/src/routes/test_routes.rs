@@ -15,7 +15,7 @@ async fn owo() -> impl IntoApiResponse {
 }
 
 fn owo_docs(op: TransformOperation) -> TransformOperation {
-    op.description("Test route, just returns body")
+    op.description("Test route, just returns string")
         .response::<200, String>()
 }
 
