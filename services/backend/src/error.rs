@@ -1,7 +1,7 @@
 use std::{borrow::Cow, collections::HashMap};
 use axum::{http::StatusCode, response::IntoResponse, Json};
 
-/// Error wrapper that used between MVC layers.
+/// Error wrapper that used between layers.
 #[derive(Debug, thiserror::Error)]
 pub(crate) enum AppError {
     /// `401 Unauthorized`.

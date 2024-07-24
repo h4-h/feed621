@@ -1,6 +1,7 @@
 mod config;
 mod app;
 mod error;
+mod models;
 mod routes;
 
 #[tokio::main]
