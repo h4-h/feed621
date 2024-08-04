@@ -15,7 +15,7 @@ This directory contains [docker-compose](https://docs.docker.com/compose) config
 
 1. [docker](https://docker.com)
 
-# FAQ
+## FAQ
 
 This behavior is achieved by [docker-compose](https://docs.docker.com/compose) [merge feature](https://docs.docker.com/compose/multiple-compose-files/merge) that allows passing list of files to the command:
 
@@ -26,7 +26,7 @@ $ docker compose -f compose.yml -f compose.admin.yml run backup_db
 
 For simplier use there are [start.sh](../scripts/start.sh) script.
 
-Usage:
+Usage(run from root of project):
 
 ```bash
 $ start.sh <dev | prod>
@@ -38,10 +38,10 @@ So if you don't want to use script, you can run needed command:
 
 ```bash
 # dev
-docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.dev.yaml up -w
+$ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.dev.yaml up -w
 
 # prod
-docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.prod.yaml up -d
+$ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.prod.yaml up -d
 ```
 
 #### [LICENSE](./LICENSE)
