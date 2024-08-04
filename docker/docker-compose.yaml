@@ -13,7 +13,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - ./.database-vol:/var/lib/postgres/data
+      - ../.database-vol:/var/lib/postgres/data
     networks:
       - database-net
     deploy:
@@ -23,7 +23,7 @@ services:
           memory: 4G
   migrations:
     build:
-      context: services/database
+      context: ../services/migrations
       dockerfile: Dockerfile
     restart: unless-stopped
     depends_on:
@@ -36,7 +36,7 @@ services:
     image: nginx:stable-alpine3.19-slim
     restart: unless-stopped
     volumes:
-      - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ../services/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - backend-net
     ports:

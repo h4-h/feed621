@@ -16,11 +16,10 @@
 $ git clone --depth=1 https://github.com/h4-h/feed621 && cd feed621
 
 # Run project
-$ ./scripts/start.sh <dev | prod>
+$ ./scripts/start.sh prod
 ```
 
-- `dev` starts a development build with autoreloading containers and development builds.
-- `prod` starts a production build with staged lightweight containers and release builds.
+More info about docker-compose configuration and start.sh script in [docker](./docker) directory.
 
 All configuration done in the `.env` file.
 
@@ -30,7 +29,7 @@ All development happens inside containers, do not try run services outside of th
 
 For development run: `./scripts/start.sh dev`
 
-See service readme for development information:
+See service readme for more information:
 
 - [nginx](./services/nginx/README.md)
 - [migrations](./services/migrations/README.md)
