@@ -25,7 +25,7 @@ All configuration done in the `.env` file.
 
 ## Development
 
-All development happens inside containers, do not try run services outside of the containers.
+**All scripts can be executed only from the root of the project.**
 
 For development run: `./scripts/start.sh dev`
 
