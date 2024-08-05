@@ -44,6 +44,6 @@ $ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.dev
 $ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.prod.yaml up -d
 ```
 
-#### [LICENSE](./LICENSE)
+#### [LICENSE](../LICENSE)
 
 Feel free to use, open issues and etc.
