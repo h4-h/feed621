@@ -1,8 +1,7 @@
 //! One-to-one representation of database objects.
 
 use serde::{Deserialize, Serialize};
-
-use crate::users::models::dtos::{NewUserDto, UpdateUserDto, UserDto};
+use crate::users::models::dtos::{NewUserDto, UpdateUserDto};
 
 #[derive(Serialize, Deserialize)]
 pub struct UserEntity {
@@ -11,18 +10,6 @@ pub struct UserEntity {
     pub email: String,
     pub password_hash: String,
     pub password_salt: String,
-}
-
-impl From<UserDto> for UserEntity {
-    fn from(value: UserDto) -> Self {
-        Self {
-            id: value.id,
-            name: value.name,
-            email: value.email,
-            password_hash: value.password_hash,
-            password_salt: value.password_salt,
-        }
-    }
 }
 
 #[derive(Serialize, Deserialize)]

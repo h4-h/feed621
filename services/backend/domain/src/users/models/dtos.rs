@@ -1,7 +1,7 @@
 //! Internal representation of user model.
 
 use serde::{Deserialize, Serialize};
-use validator::{Validate, ValidationError};
+use validator::Validate;
 use crate::utils::PasswordManager;
 use super::{schemas::{NewUserRequest, UpdateUserRequest}, entities::UserEntity};
 
@@ -28,7 +28,7 @@ impl From<UserEntity> for UserDto {
 
 #[derive(Serialize, Deserialize, Validate)]
 pub struct NewUserDto {
-    #[validate(custom(function = validate_username_len))]
+    #[validate(length(min = 4, max = 20, message = "Username length must be greater than 4 and less than 20 symbols."))]
     pub name: String,
     #[validate(email)]
     pub email: String,
@@ -53,7 +53,7 @@ impl NewUserDto {
 
 #[derive(Serialize, Deserialize, Validate)]
 pub struct UpdateUserDto {
-    #[validate(custom(function = validate_username_len))]
+    #[validate(length(min = 4, max = 20, message = "Username length must be greater than 4 and less than 20 symbols."))]
     pub name: Option<String>,
     #[validate(email)]
     pub email: Option<String>,
@@ -80,18 +80,4 @@ impl UpdateUserDto {
             password_salt: salt,
         }
     }
-}
-
-// This validation equal to #[validate(length(min = 4, max = 20).
-// It done by external function because we have two places where we validate username length.
-fn validate_username_len(username: &str) -> Result<(), ValidationError> {
-    if username.len() < 4 {
-        return Err(ValidationError::new("Username length must be greater than 4 symbols."));
-    }
-    
-    if username.len() > 20 {
-        return Err(ValidationError::new("Username length must be less than 20 symbols."))
-    }
-
-    Ok(())
 }

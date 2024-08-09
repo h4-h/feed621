@@ -3,7 +3,6 @@
 //! Responsible for serialization, deserialization and validation.
 
 use serde::{Deserialize, Serialize};
-
 use crate::app_error::AppResult;
 
 #[derive(Serialize, Deserialize)]

@@ -1,7 +1,6 @@
 //! Request and response structs for user.
 
 use serde::{Deserialize, Serialize};
-
 use crate::users::models::dtos::UserDto;
 
 /// Used in responses for other users.

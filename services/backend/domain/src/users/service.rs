@@ -1,6 +1,7 @@
 //! Service, shit that contains logic and validation.
 
-use crate::{app_error::AppResult, users::models::dtos::{NewUserDto, UpdateUserDto, UserDto}, utils::Claims};
+use crate::{app_error::AppResult, utils::Claims};
+use super::models::dtos::{NewUserDto, UpdateUserDto, UserDto};
 
 #[async_trait::async_trait]
 #[cfg_attr(test, mockall::automock)]
