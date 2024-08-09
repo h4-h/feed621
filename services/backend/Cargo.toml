@@ -1,0 +1,32 @@
+[package]
+name = "backend"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+members = ["domain"]
+
+[dependencies]
+domain.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+tokio.workspace = true
+axum = { version = "0.7.5", optional = true }
+axum-typed-routing = { version = "0.2.1", features = ["aide"], optional = true }
+aide = { version = "0.13.4", features = ["axum"], optional = true }
+
+[features]
+default = ["axum"]
+axum = ["dep:axum", "dep:axum-typed-routing", "dep:aide"]
+
+[dev-dependencies]
+mockall.workspace = true
+
+[workspace.dependencies]
+domain = { path = "domain" }
+anyhow = "1.0.86"
+mockall = "0.13.0"
+async-trait = "0.1.81"
+serde = { version = "1.0.204", features = ["derive", "rc"] }
+validator = { version = "0.18.1", features = ["derive"] }
+tokio = { version = "1.39.2", features = ["full"] }

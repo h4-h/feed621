@@ -1,0 +1,15 @@
+[package]
+name = "domain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow.workspace = true
+async-trait.workspace = true
+serde.workspace = true
+validator.workspace = true
+thiserror = "1.0.63"
+
+[dev-dependencies]
+mockall.workspace = true
+tokio.workspace = true
