@@ -5,7 +5,7 @@
   </p>
 </div>
 
-# !WIP! DO NOT READY FOR ANYTHING
+# !WIP! NOT READY FOR ANYTHING
 
 ## Requirements
 
