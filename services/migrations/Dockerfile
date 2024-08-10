@@ -1,4 +1,4 @@
-FROM rust:1.79.0-alpine
+FROM rust:1.80.1-alpine
 
 WORKDIR /app
 COPY /migrations ./migrations
