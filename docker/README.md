@@ -29,19 +29,7 @@ For simplier use there are [start.sh](../scripts/start.sh) script.
 Usage(run from root of project):
 
 ```bash
-$ start.sh <dev | prod>
-```
-
-Note that `prod` starts in `detach` mode and `dev` in [`watch`](https://docs.docker.com/compose/file-watch) mode.
-
-So if you don't want to use script, you can run needed command:
-
-```bash
-# dev
-$ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.dev.yaml up -w
-
-# prod
-$ docker compose --env-file ../.env -f docker-compose.yaml -f docker-compose.prod.yaml up -d
+$ ./scripts/start.sh <dev | prod>
 ```
 
 #### [LICENSE](../LICENSE)
