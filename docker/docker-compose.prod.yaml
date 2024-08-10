@@ -1,1 +1,15 @@
 services:
+  backend:
+    build:
+      context: ../services/backend
+      target: release
+    restart: unless-stopped
+    depends_on:
+      - migrations
+    environment:
+      APP_ADDR: "0.0.0.0"
+      APP_PORT: "8080"
+      DATABASE_URL: "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+    networks:
+      - database-net
+      - backend-net
