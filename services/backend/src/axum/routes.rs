@@ -9,12 +9,15 @@ mod subscriptions;
 pub fn app_router() -> axum::Router {
     let mut api = aide::openapi::OpenApi::default();
 
-    aide::axum::ApiRouter::new()
-        .nest("/docs", openapi::router())
+    let api_routes = aide::axum::ApiRouter::new()
         .nest("/users", users::router())
         .nest("/topics", topics::router())
         .nest("/subscriptions", subscriptions::router())
-        .typed_api_route(get_info)
+        .typed_api_route(get_info);
+    
+    aide::axum::ApiRouter::new()
+        .nest("/docs", openapi::router())
+        .nest("/api", api_routes)
         .finish_api_with(&mut api, openapi::configure_info)
         .layer(axum::Extension(std::sync::Arc::new(api)))
         .fallback(|| async { "You entered the V O I D 0w0" })
