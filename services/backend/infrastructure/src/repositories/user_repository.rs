@@ -74,7 +74,7 @@ impl UserRepository for PostgresUserRepository {
 
 #[cfg(test)]
 mod test {
-    use domain::users::repository::UserRepository;
+    use domain::users::{models::entities::{NewUserEntity, UserEntity}, repository::UserRepository};
     use testcontainers::{runners::AsyncRunner, ContainerRequest, ImageExt};
     use testcontainers_modules::postgres::Postgres;
     use super::PostgresUserRepository;
@@ -91,41 +91,66 @@ mod test {
         let host = container.get_host().await.expect("can not get container host");
         let port = container.get_host_port_ipv4(5432).await.expect("can not get container port");
         let db_url = format!("postgres://root:root@{host}:{port}/test_db_feed621");
-
         let pool = sqlx::PgPool::connect(&db_url).await.expect("can not connect to database");
+
         PostgresUserRepository::new(std::sync::Arc::new(pool))
     }
 
-    #[tokio::test]
-    async fn insert_success() {
-        todo!()
-    }
+    // INFO: https://github.com/rust-lang/rust/issues/128984
+    // currently I can not test this because `cfg_attr` doesn't count if it in other crate :)
+    // and I don't want to include `derive(Debug, PartialEq, Eq)` to runtime.
+    // If this is not a bug (I mean - that's my crate, it's in MY workspace I sure it's a bug)
+    // I'll add this derives and write tests.
 
-    async fn inser_fail() {
-        todo!()
-    }
+    // #[tokio::test]
+    // async fn insert_success() {
+    //     let precomputed_new_user = UserEntity {
+    //         id: 1,
+    //         name: "test".to_owned(),
+    //         email: "test".to_owned(),
+    //         password_hash: "test".to_owned(),
+    //         password_salt: "test".to_owned(),
+    //     };
 
-    async fn read_success() {
-        todo!()
-    }
+    //     let requested_new_user = NewUserEntity {
+    //         name: "test".to_owned(),
+    //         email: "test".to_owned(),
+    //         password_hash: "test".to_owned(),
+    //         password_salt: "test".to_owned(),
+    //     };
 
-    async fn read_fail() {
-        todo!()
-    }
+    //     let created_new_user = get_repository().await.insert(requested_new_user).await.unwrap();
 
-    async fn update_success() {
-        todo!()
-    }
+    //     assert_eq!(precomputed_new_user, created_new_user);
+        
+    //     todo!()
+    // }
 
-    async fn update_fail() {
-        todo!()
-    }
+    // async fn inser_fail() {
+    //     todo!()
+    // }
 
-    async fn delete_success() {
-        todo!()
-    }
+    // async fn read_success() {
+    //     todo!()
+    // }
 
-    async fn delete_fail() {
-        todo!()
-    }
+    // async fn read_fail() {
+    //     todo!()
+    // }
+
+    // async fn update_success() {
+    //     todo!()
+    // }
+
+    // async fn update_fail() {
+    //     todo!()
+    // }
+
+    // async fn delete_success() {
+    //     todo!()
+    // }
+
+    // async fn delete_fail() {
+    //     todo!()
+    // }
 }
