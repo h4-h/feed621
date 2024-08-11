@@ -7,3 +7,4 @@ edition = "2021"
 domain.workspace = true
 argon2rs = { version = "0.2.5" }
 rand = "0.8.5"
+jsonwebtoken = {version = "9", default-features = false }
