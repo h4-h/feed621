@@ -1,0 +1,9 @@
+[package]
+name = "infrastructure"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+domain.workspace = true
+argon2rs = { version = "0.2.5" }
+rand = "0.8.5"
