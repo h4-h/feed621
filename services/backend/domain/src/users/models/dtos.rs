@@ -53,6 +53,7 @@ impl NewUserDto {
 
 #[derive(Serialize, Deserialize, Validate)]
 pub struct UpdateUserDto {
+    pub id: i64,
     #[validate(length(min = 4, max = 20, message = "Username length must be greater than 4 and less than 20 symbols."))]
     pub name: Option<String>,
     #[validate(email)]
@@ -63,13 +64,14 @@ pub struct UpdateUserDto {
 
 impl UpdateUserDto {
     /// `impl From<T>` doesn't accept custom signatures.
-    pub fn from<P: PasswordManager>(value: UpdateUserRequest) -> AppResult<Self> {
+    pub fn from<P: PasswordManager>(value: UpdateUserRequest, id: i64) -> AppResult<Self> {
         let (hash, salt) = value.password.map(|pass| {
             let salt = <P>::generate_salt();
             <P>::hash_password(&pass, &salt).map(|hash| (hash, salt))
         }).transpose()?.unzip();
 
         Ok(Self {
+            id,
             name: value.name,
             email: value.email,
             password_hash: hash,

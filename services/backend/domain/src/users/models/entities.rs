@@ -33,6 +33,7 @@ impl From<NewUserDto> for NewUserEntity {
 
 #[derive(Serialize, Deserialize)]
 pub struct UpdateUserEntity {
+    pub id: i64,
     pub name: Option<String>,
     pub email: Option<String>,
     pub password_hash: Option<String>,
@@ -42,6 +43,7 @@ pub struct UpdateUserEntity {
 impl From<UpdateUserDto> for UpdateUserEntity {
     fn from(value: UpdateUserDto) -> Self {
         Self {
+            id: value.id,
             name: value.name,
             email: value.email,
             password_hash: value.password_hash,

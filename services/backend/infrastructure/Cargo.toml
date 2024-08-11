@@ -5,6 +5,14 @@ edition = "2021"
 
 [dependencies]
 domain.workspace = true
+async-trait.workspace = true
 argon2rs = { version = "0.2.5" }
 rand = "0.8.5"
 jsonwebtoken = {version = "9", default-features = false }
+sqlx = { version = "0.8.0", features = [ "runtime-tokio", "tls-rustls", "postgres" ] }
+
+[dev-dependencies]
+tokio.workspace = true
+testcontainers = { version = "0.21.1" }
+testcontainers-modules = {version = "0.9.0", features = ["blocking", "postgres"] }
+sqlx = { version = "0.8.0", features = ["migrate"] }
