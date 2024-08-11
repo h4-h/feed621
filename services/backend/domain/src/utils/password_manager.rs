@@ -9,5 +9,5 @@ use crate::app_error::AppResult;
 pub trait PasswordManager {
     fn generate_salt() -> String;
     fn hash_password(password: &str, salt: &str) -> AppResult<String>;
-    fn verify(password_hash: &str, salt: &str) -> AppResult<String>;
+    fn verify(password: &str, salt: &str, hash: &str) -> AppResult<bool>;
 }
