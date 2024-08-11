@@ -5,7 +5,7 @@
 use serde::{Deserialize, Serialize};
 use crate::app_error::AppResult;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Claims {
     pub sub: i64,
     pub exp: u64,
