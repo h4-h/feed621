@@ -2,7 +2,7 @@
 
 use serde::{Deserialize, Serialize};
 use validator::Validate;
-use crate::utils::PasswordManager;
+use crate::{app_error::AppResult, utils::PasswordManager};
 use super::{schemas::{NewUserRequest, UpdateUserRequest}, entities::UserEntity};
 
 #[derive(Serialize, Deserialize)]
@@ -38,16 +38,16 @@ pub struct NewUserDto {
 
 impl NewUserDto {
     /// `impl From<T>` doesn't accept custom signatures.
-    pub fn from<P: PasswordManager>(value: NewUserRequest) -> Self {
+    pub fn from<P: PasswordManager>(value: NewUserRequest) -> AppResult<Self> {
         let salt = <P>::generate_salt();
-        let hash = <P>::hash_password(&value.password, &salt);
+        let hash = <P>::hash_password(&value.password, &salt)?;
         
-        Self {
+        Ok(Self {
             name: value.name,
             email: value.email,
             password_hash: hash,
             password_salt: salt,
-        }
+        })
     }
 }
 
@@ -63,21 +63,17 @@ pub struct UpdateUserDto {
 
 impl UpdateUserDto {
     /// `impl From<T>` doesn't accept custom signatures.
-    pub fn from<P: PasswordManager>(value: UpdateUserRequest) -> Self {
-        let (hash, salt) = if value.password.is_some() {
+    pub fn from<P: PasswordManager>(value: UpdateUserRequest) -> AppResult<Self> {
+        let (hash, salt) = value.password.map(|pass| {
             let salt = <P>::generate_salt();
-            let hash = <P>::hash_password(value.password.as_ref().unwrap(), &salt);
+            <P>::hash_password(&pass, &salt).map(|hash| (hash, salt))
+        }).transpose()?.unzip();
 
-            (Some(salt), Some(hash))
-        } else {
-            (None, None)
-        };
-        
-        Self {
+        Ok(Self {
             name: value.name,
             email: value.email,
             password_hash: hash,
             password_salt: salt,
-        }
+        })
     }
 }
