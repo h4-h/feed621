@@ -16,6 +16,9 @@ pub enum AppError {
     /// Invaild token
     #[error("Invalid token")]
     BadToken,
+    /// Invalid credentials
+    #[error("Bad credentials")]
+    BadCredentials,
     /// Unauthorized access.
     #[error("Unauthorized access")]
     Unauthorized,
