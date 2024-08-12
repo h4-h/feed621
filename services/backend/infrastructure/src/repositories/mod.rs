@@ -1,3 +1,4 @@
+mod test_utils;
 mod user_repository;
 // mod topic_repository;
 // mod subscription_repository;

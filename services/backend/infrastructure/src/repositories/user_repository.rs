@@ -1,13 +1,14 @@
 use std::sync::Arc;
 use domain::{app_error::{AppError, AppResult}, users::{models::entities::{NewUserEntity, UpdateUserEntity, UserEntity}, repository::UserRepository}};
 use sqlx::{query, query_as, PgPool};
+use super::test_utils::PgRepository;
 
 pub struct PostgresUserRepository {
     pool: Arc<PgPool>,
 }
 
-impl PostgresUserRepository {
-    pub fn new(pool: Arc<PgPool>) -> Self {
+impl PgRepository for PostgresUserRepository {
+    fn new(pool: Arc<PgPool>) -> Self {
         Self {
             pool,
         }
@@ -75,63 +76,45 @@ impl UserRepository for PostgresUserRepository {
 #[cfg(test)]
 mod test {
     use domain::users::{models::entities::{NewUserEntity, UserEntity}, repository::UserRepository};
-    use testcontainers::{runners::AsyncRunner, ContainerRequest, ImageExt};
-    use testcontainers_modules::postgres::Postgres;
     use super::PostgresUserRepository;
+    use crate::repositories::test_utils::utils::test_repo;
 
-    fn init_container() -> ContainerRequest<Postgres> {
-        Postgres::default()
-            .with_env_var("POSTGRES_DB", "test_db_feed621")
-            .with_env_var("POSTGRES_USER", "root")
-            .with_env_var("POSTGRES_PASSWORD", "root")
+    #[tokio::test]
+    async fn insert_success() {
+        test_repo(|repo: PostgresUserRepository| async move {
+            let precomputed_new_user = UserEntity {
+                id: 1,
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            };
+
+            let requested_new_user = NewUserEntity {
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            };
+
+            let created_new_user = repo.insert(requested_new_user).await.unwrap();
+
+            assert_eq!(precomputed_new_user, created_new_user)
+        }).await;
     }
-
-    async fn get_repository() -> impl UserRepository {
-        let container = init_container().start().await.expect("can not launch container");
-        let host = container.get_host().await.expect("can not get container host");
-        let port = container.get_host_port_ipv4(5432).await.expect("can not get container port");
-        let db_url = format!("postgres://root:root@{host}:{port}/test_db_feed621");
-        let pool = sqlx::PgPool::connect(&db_url).await.expect("can not connect to database");
-
-        PostgresUserRepository::new(std::sync::Arc::new(pool))
-    }
-
-    // INFO: https://github.com/rust-lang/rust/issues/128984
-    // currently I can not test this because `cfg_attr` doesn't count if it in other crate :)
-    // and I don't want to include `derive(Debug, PartialEq, Eq)` to runtime.
-    // If this is not a bug (I mean - that's my crate, it's in MY workspace I sure it's a bug)
-    // I'll add this derives and write tests.
-
-    // #[tokio::test]
-    // async fn insert_success() {
-    //     let precomputed_new_user = UserEntity {
-    //         id: 1,
-    //         name: "test".to_owned(),
-    //         email: "test".to_owned(),
-    //         password_hash: "test".to_owned(),
-    //         password_salt: "test".to_owned(),
-    //     };
-
-    //     let requested_new_user = NewUserEntity {
-    //         name: "test".to_owned(),
-    //         email: "test".to_owned(),
-    //         password_hash: "test".to_owned(),
-    //         password_salt: "test".to_owned(),
-    //     };
-
-    //     let created_new_user = get_repository().await.insert(requested_new_user).await.unwrap();
-
-    //     assert_eq!(precomputed_new_user, created_new_user);
-        
-    //     todo!()
-    // }
 
     // async fn inser_fail() {
     //     todo!()
     // }
 
+    // #[tokio::test]
     // async fn read_success() {
-    //     todo!()
+    //     let readed_user = get_repository().await.select_by_id(1).await.unwrap();
+
+    //     println!("{}", readed_user.name);
+
+    //     assert!(false)
+        
     // }
 
     // async fn read_fail() {
