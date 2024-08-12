@@ -75,7 +75,7 @@ impl UserRepository for PostgresUserRepository {
 
 #[cfg(test)]
 mod test {
-    use domain::users::{models::entities::{NewUserEntity, UserEntity}, repository::UserRepository};
+    use domain::users::{models::entities::{NewUserEntity, UpdateUserEntity, UserEntity}, repository::UserRepository};
     use super::PostgresUserRepository;
     use crate::repositories::test_utils::utils::test_repo;
 
@@ -107,31 +107,85 @@ mod test {
     //     todo!()
     // }
 
-    // #[tokio::test]
-    // async fn read_success() {
-    //     let readed_user = get_repository().await.select_by_id(1).await.unwrap();
+    #[tokio::test]
+    async fn read_success() {
+        test_repo(|repo: PostgresUserRepository| async move {
+            let precomputed_user = UserEntity {
+                id: 1,
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            };
 
-    //     println!("{}", readed_user.name);
+            let _ = repo.insert(NewUserEntity {
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            }).await.unwrap();
 
-    //     assert!(false)
-        
-    // }
+            let user = repo.select_by_id(precomputed_user.id).await.unwrap();
+
+            assert_eq!(precomputed_user, user)
+        }).await;
+    }
 
     // async fn read_fail() {
     //     todo!()
     // }
 
-    // async fn update_success() {
-    //     todo!()
-    // }
+    #[tokio::test]
+    async fn update_success() {
+        test_repo(|repo: PostgresUserRepository| async move {
+            let precomputed_user = UserEntity {
+                id: 1,
+                name: "changed".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            };
+
+            let _ = repo.insert(NewUserEntity {
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            }).await.unwrap();
+
+            let user = repo.update(UpdateUserEntity {
+                id: 1,
+                name: Some("changed".to_owned()),
+                email: None,
+                password_hash: None,
+                password_salt: None,
+            }).await.unwrap();
+
+            assert_eq!(precomputed_user, user)
+        }).await;
+    }
 
     // async fn update_fail() {
     //     todo!()
     // }
 
-    // async fn delete_success() {
-    //     todo!()
-    // }
+    #[tokio::test]
+    async fn delete_success() {
+        test_repo(|repo: PostgresUserRepository| async move {
+            let _ = repo.insert(NewUserEntity {
+                name: "test".to_owned(),
+                email: "test".to_owned(),
+                password_hash: "test".to_owned(),
+                password_salt: "test".to_owned(),
+            }).await.unwrap();
+
+            let is_deleted = repo.delete(1).await;
+            assert!(is_deleted.is_ok());
+
+            let deleted_user = repo.select_by_id(1).await;
+            assert!(deleted_user.is_err());
+        }).await;
+    }
 
     // async fn delete_fail() {
     //     todo!()
