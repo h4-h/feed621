@@ -3,8 +3,7 @@
 use serde::{Deserialize, Serialize};
 use crate::users::models::dtos::{NewUserDto, UpdateUserDto};
 
-#[derive(Serialize, Deserialize)]
-#[cfg_attr(test, derive(Debug, PartialEq, Eq))]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize)]
 pub struct UserEntity {
     pub id: i64,
     pub name: String,
