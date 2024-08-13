@@ -99,7 +99,7 @@ mod test {
 
             let created_new_user = repo.insert(requested_new_user).await.unwrap();
 
-            assert_eq!(precomputed_new_user, created_new_user)
+            assert_eq!(precomputed_new_user, created_new_user);
         }).await;
     }
 
@@ -127,7 +127,7 @@ mod test {
 
             let user = repo.select_by_id(precomputed_user.id).await.unwrap();
 
-            assert_eq!(precomputed_user, user)
+            assert_eq!(precomputed_user, user);
         }).await;
     }
 
@@ -161,7 +161,7 @@ mod test {
                 password_salt: None,
             }).await.unwrap();
 
-            assert_eq!(precomputed_user, user)
+            assert_eq!(precomputed_user, user);
         }).await;
     }
 
